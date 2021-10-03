@@ -1,21 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/screen/home_screen.dart';
-import 'package:flutter_login/screen/sign_screen.dart';
+import 'package:flutter_login/screen/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignScreen extends StatefulWidget {
+  const SignScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignScreenState createState() => _SignScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignScreenState extends State<SignScreen> {
   final _keyForm = GlobalKey<FormState>();
+  final firstController = TextEditingController();
+  final lastController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
-
+  final cPassController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final firstField = TextFormField(
+      autofocus: false,
+      controller: firstController,
+      onSaved: (value) {
+        firstController.text = value!;
+      },
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_box_outlined),
+          hintText: 'First Name',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          contentPadding: EdgeInsets.all(20)),
+      textInputAction: TextInputAction.next,
+    );
+    final lastField = TextFormField(
+      autofocus: false,
+      controller: lastController,
+      onSaved: (value) {
+        lastController.text = value!;
+      },
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_box),
+          hintText: 'Last Name',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          contentPadding: EdgeInsets.all(20)),
+      textInputAction: TextInputAction.next,
+    );
     final emailField = TextFormField(
       autofocus: false,
       keyboardType: TextInputType.emailAddress,
@@ -42,25 +69,37 @@ class _LoginScreenState extends State<LoginScreen> {
           hintText: 'Password',
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           contentPadding: EdgeInsets.all(20)),
+      textInputAction: TextInputAction.next,
+    );
+    final cPassField = TextFormField(
+      autofocus: false,
+      obscureText: true,
+      controller: cPassController,
+      onSaved: (value) {
+        cPassController.text = value!;
+      },
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_box),
+          hintText: 'Confirm Password',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          contentPadding: EdgeInsets.all(20)),
       textInputAction: TextInputAction.done,
     );
-    final LoginButton = Material(
+    final signButton = Material(
       color: Colors.blueAccent,
       elevation: 20,
       borderRadius: BorderRadius.circular(15),
       child: MaterialButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        },
+        onPressed: () {},
         minWidth: MediaQuery.of(context).size.width,
-        child: Text('Login',
+        child: Text('Sign Up',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
                 color: Colors.white)),
       ),
     );
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -69,10 +108,18 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 180,
-                  width: 180,
+                  height: 100,
+                  width: 100,
                   child: Image.asset('assets/logo_main.png'),
                 ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                firstField,
+                SizedBox(
+                  height: 15.0,
+                ),
+                lastField,
                 SizedBox(
                   height: 15.0,
                 ),
@@ -84,23 +131,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 15.0,
                 ),
-                LoginButton,
+                cPassField,
+                SizedBox(
+                  height: 15.0,
+                ),
+                signButton,
                 SizedBox(
                   height: 20.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Haven\'t you an Account?'),
+                    Text('You have an Account?'),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignScreen()));
+                                builder: (context) => LoginScreen()));
                       },
                       child: Text(
-                        ' Sign Up',
+                        ' Login',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
